@@ -82,20 +82,16 @@ public class UserDao {
   *가장 먼저 할 일은 커넥션을 가져오는 중복된 코드를 분리하는 것이다. 중복된 DB 연결코드를 getConnection()이라는 이름의 독립적인 메소드로 만들어둔다. 각 DAO메소드에서는 이렇게 분리한 getConnection()메소드를 호출해서 DB커넥션을 가져오게 만든다. 다음은 수정한 UserDao코드의 일부분이다.
 
   ```java
-  
   public void add(User user) throws ClassNotFoundException, SQLException {
     Connection c = getConnection ();
 ...
 }
-
 public User get(String id) throws ClassNotFoundException, SQLException {
     Connection c = getConnection();
 ...
 }
-
 //DB 연결 기능이 필요하면 getConnection() 메소드를 이용하게 한다.
 //중복된 코드를 독립적인 메소드로 만들어서 중복을 제거했다.
-
 private Connection getConnection() throws ClassNotFoundException, SQLException {
     Class. forName ("com.mysql.jdbc.Driver");
     Connection c = DriverManager.getConnection(
