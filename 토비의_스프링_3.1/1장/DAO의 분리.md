@@ -84,7 +84,6 @@ public class UserDao {
   ```java
   public void add(User user) throws ClassNotFoundException, SQLException {
     Connection c = getConnection ();
-...
 }
 public User get(String id) throws ClassNotFoundException, SQLException {
     Connection c = getConnection();
