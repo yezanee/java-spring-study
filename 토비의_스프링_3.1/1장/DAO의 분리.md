@@ -90,8 +90,10 @@ public User get(String id) throws ClassNotFoundException, SQLException {
     Connection c = getConnection();
 ...
 }
+    
 //DB 연결 기능이 필요하면 getConnection() 메소드를 이용하게 한다.
 //중복된 코드를 독립적인 메소드로 만들어서 중복을 제거했다.
+    
 private Connection getConnection() throws ClassNotFoundException, SQLException {
     Class. forName ("com.mysql.jdbc.Driver");
     Connection c = DriverManager.getConnection(
@@ -101,6 +103,36 @@ private Connection getConnection() throws ClassNotFoundException, SQLException {
 </code>
 </pre>
 
+## 1.2.3 DB 커넥션 만들기의 독립
+> 상속을 통한 확장
+* UserDao 에서 메소드의 구현 코드를 제거하고 getConnection()을 추상 메소드로 만들어놓으면, 추상 메소드라서 메소드 코드는 없지만 메소드 자체는 존재한다. 따라서 add(), get() 메소드에서 getConnection()을 호출하는 코드는 그대로 유지할수있다.
+
+<pre>
+<code>
+public abstract class UserDao {
+ public void add(User user) throws ClassNotFoundException, SQLException {
+    Connection c = getConnection ();
+}
+    
+public User get(String id) throws ClassNotFoundException, SQLException {
+    Connection c = getConnection();
+...
+}
+ public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+    }
+public class NUserDao UserDao{
+    public Connection getConnection() throws ClassNotFoundException, SQLException {
+        //N사 DB 생성코드
+    }
+
+    public class DUserDao extends UserDao{
+     public Connection getConnection() throws ClassNotFoundException, SQLException {
+        //N사 DB 생성코드
+    }
+}
+</code>
+</pre>
+  
 
 
 
