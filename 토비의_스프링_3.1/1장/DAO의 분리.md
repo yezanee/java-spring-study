@@ -5,7 +5,8 @@
 
 
 ## 1.2.2 커넥션 만들기의 추출
-'''
+<pre>
+<code>
 package springbook.user.dao;
 ...
 public class UserDao {
@@ -51,7 +52,8 @@ public class UserDao {
            return user;
    	}
 } 
-'''
+</code>
+</pre>
 
 
 
