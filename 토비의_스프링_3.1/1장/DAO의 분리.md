@@ -9,49 +9,67 @@
 <code>
 package springbook.user.dao;
 ...
+
+// UserDao 클래스: 사용자 정보에 대한 데이터 액세스 객체를 제공하는 클래스
 public class UserDao {
 
-   public void add(User user) throws ClassNotFoundException, SQLException { 
-   		Class.forName("com.mysql.jdbc.Driver");
+    // 사용자 정보를 추가하는 메서드
+    public void add(User user) throws ClassNotFoundException, SQLException { 
+        // JDBC 드라이버 로딩
+        Class.forName("com.mysql.jdbc.Driver");
+        // 데이터베이스 연결
         Connection c = DriverManager.getConnection(
-           	"jdbc:mysql://localhost/springbook", "spring", "book"); 
+                "jdbc:mysql://localhost/springbook", "spring", "book"); 
                
-   PreparedStatement ps = c.prepareStatement(
-   		"insert into user(id, name, password) values(?,?,?)");   
-    ps.setString(1, user.getId());
-    ps.setString(2, user.getName());
-    ps.setString(3, user.getPassword());
-    
-    ps.executeUpdate();
+        // SQL 실행을 위한 PreparedStatement 생성
+        PreparedStatement ps = c.prepareStatement(
+                "insert into user(id, name, password) values(?,?,?)");   
+        // 사용자 정보 설정
+        ps.setString(1, user.getId());
+        ps.setString(2, user.getName());
+        ps.setString(3, user.getPassword());
+        
+        // SQL 실행
+        ps.executeUpdate();
   
-    ps.close();
-    c.close();
+        // 리소스 정리
+        ps.close();
+        c.close();
+    }
+
+    // 사용자 정보를 조회하는 메서드
+    public User get(String id) throws ClassNotFoundException, SQLException { 
+        // JDBC 드라이버 로딩
+        Class.forName("com.mysql.jdbc.Driver");
+        // 데이터베이스 연결
+        Connection c = DriverManager.getConnection (
+                "jdbc:mysql://localhost/springbook", "spring", "book");
+        
+        // SQL 실행을 위한 PreparedStatement 생성
+        PreparedStatement ps = c.prepareStatement(
+                "select * from users where id = ?");
+        ps.setString(1, id);
+        
+        // SQL 실행 결과를 ResultSet에 저장
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        
+        // 조회된 사용자 정보를 User 객체에 설정
+        User user = new User();
+        user.setId(rs.getString("id"));
+        user.setName(rs.getString("name"));
+        user.setPassword(rs.getString("password"));
+        
+        // 리소스 정리
+        rs.close();
+        ps.close();
+        c.close();
+        
+        // 조회된 사용자 정보를 반환
+        return user;
+    }
 }
 
-   
-   public User get(String id) throws ClassNotFoundException, SQLException { 
-   		Class.forName("com.mysql.jdbc.Driver");
-           Connection c = DriverManager.getConnection (
-           				"jdbc:mysql://localhost/springbook", "spring", "book");
-           
-           PreparedStatement ps = c.prepareStatement(
-           				"select * from users where id = ?");
-           ps.setString(1, id);
-           
-           ResultSet rs = ps.executeQuery();
-           rs.next();
-           User user = new User();
-           user.setId(rs.getString("id"));
-           user.setName(rs.getString("name"));
-           user.setPassword(rs.getString("password"));
-           
-           rs.close();
-           ps.close();
-           c.close();
-           
-           return user;
-   	}
-} 
 </code>
 </pre>
 
