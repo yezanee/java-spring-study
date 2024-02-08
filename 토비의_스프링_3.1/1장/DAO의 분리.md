@@ -5,7 +5,8 @@
 
 
 ## 1.2.2 커넥션 만들기의 추출
-'''java
+'''java   
+
 package springbook.user.dao;
 ...
 
@@ -67,8 +68,9 @@ public class UserDao {
         // 조회된 사용자 정보를 반환
         return user;
     }
-}
+}   
 '''
+
 
 
 
