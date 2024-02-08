@@ -9,11 +9,8 @@
 ```java   
 
 package springbook.user.dao;
-...
-
 // UserDao 클래스: 사용자 정보에 대한 데이터 액세스 객체를 제공하는 클래스
 public class UserDao {
-
     // 사용자 정보를 추가하는 메서드
     public void add(User user) throws ClassNotFoundException, SQLException { 
         // JDBC 드라이버 로딩
@@ -104,7 +101,8 @@ private Connection getConnection() throws ClassNotFoundException, SQLException {
     Connection c = DriverManager.getConnection(
         "jdbc: mysql://localhost/springbook", "spring", "book");
     return c;
-} ```
+}
+```
 
 
 
